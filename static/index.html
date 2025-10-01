@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Echo Client</title>
+</head>
+<body>
+    <h1>WebSocket Echo Test</h1>
+    <input id="msg" type="text" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button>
+    <pre id="log"></pre>
+    <script>
+        let ws;
+        function connect() {
+            ws = new WebSocket(`ws://${location.host}/ws`);
+            ws.onopen = () => log('Connected to server');
+            ws.onmessage = (event) => log('Server: ' + event.data);
+            ws.onclose = () => log('Disconnected');
+            ws.onerror = (err) => log('Error: ' + err.message);
+        }
+        function sendMessage() {
+            const input = document.getElementById('msg');
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(input.value);
+                log('You: ' + input.value);
+                input.value = '';
+            }
+        }
+        function log(msg) {
+            document.getElementById('log').textContent += msg + '\n';
+        }
+        window.onload = connect;
+    </script>
+</body>
+</html>
