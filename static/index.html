@@ -12,7 +12,7 @@
     <script>
         let ws;
         function connect() {
-            ws = new WebSocket(`ws://${location.host}/ws`);
+            ws = new WebSocket(`wss://${location.host}/ws`);
             ws.onopen = () => log('Connected to server');
             ws.onmessage = (event) => log('Server: ' + event.data);
             ws.onclose = () => log('Disconnected');
