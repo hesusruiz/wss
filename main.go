@@ -17,6 +17,8 @@ var upgrader = websocket.Upgrader{
 }
 
 func wsHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("StartWS", r.Method, r.Proto, r.URL.Path)
+
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("Upgrade error:", err)
